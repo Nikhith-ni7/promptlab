@@ -1,0 +1,12 @@
+PromptLab — a minimal prompt engineering project
+
+1. Unzip this folder.
+2. Double-click index.html to open it in your browser.
+3. Click "Load worked example" to see how it works.
+4. To try a real model, build both prompts, copy each into a fresh AI chat,
+   and paste the exact responses back into the two answer boxes.
+5. Check both answers, write your verdict, and download the experiment.
+
+No Python, terminal setup, API key, or backend is needed.
+To publish, follow the GitHub Pages instructions in README.md.
+The example answers are handwritten, not AI-generated results.

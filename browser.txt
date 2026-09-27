@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checks": [
+    "Direct file opening",
+    "Fixture scoring",
+    "Synthetic provenance",
+    "JSON download",
+    "Edited-fixture provenance",
+    "Malformed response checks",
+    "Stale experiment guard",
+    "HTML rendered as text",
+    "Practice cases",
+    "Empty-answer guidance",
+    "Keyboard tab navigation",
+    "Copy or selection fallback",
+    "Human-review validation",
+    "Review invalidation after answer edits",
+    "Mobile overflow",
+    "No browser exceptions",
+    "No HTTP requests"
+  ]
+}

@@ -1,0 +1,20 @@
+✔ both prompts use the same source and target keys (3.053783ms)
+✔ untrusted delimiters are escaped in structured input (0.508037ms)
+✔ invalid note and word-limit settings are rejected (1.474753ms)
+✔ handwritten examples have the declared scores (1.404997ms)
+✔ malformed JSON and markdown fences fail JSON and schema checks (0.648984ms)
+✔ null owner and deadline are allowed; invented missing fields are not (0.437879ms)
+✔ schema rejects arrays, extra fields, wrong types, and empty strings (0.546224ms)
+✔ word limit counts text values, not JSON keys (0.482054ms)
+✔ empty answers fail all applicable checks (0.390305ms)
+✔ required terms are literal, case-insensitive, and optional (0.540891ms)
+✔ checks intentionally cannot establish semantic correctness (0.424975ms)
+✔ exports preserve evidence source and real prompts (1.146853ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 215.248421

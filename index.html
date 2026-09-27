@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="A small prompt engineering lab. Turn rough notes into structured project briefs, compare two prompting approaches, and record the evidence."
+    />
+    <meta name="theme-color" content="#163b73" />
+    <title>PromptLab — a better brief starts with a better prompt</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23163b73'/%3E%3Cpath d='M8 10h8v5H8zm0 8h16v5H8zm11-8h5v5h-5z' fill='white'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="core.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./"
+        ><span class="brand-icon">p<span>_</span></span
+        >promptlab<span class="brand-tag">BRIEF BUILDER</span></a
+      >
+      <div class="top-right">
+        <span class="local-label">Runs in your browser</span
+        ><button id="example" class="secondary">Load worked example</button>
+      </div>
+    </header>
+    <main>
+      <div class="intro">
+        <div>
+          <div class="eyebrow">A SMALL EXPERIMENT IN BETTER INSTRUCTIONS</div>
+          <h1>Same notes.<br /><span>Two different prompts.</span></h1>
+          <p>
+            Turn rough ideas into a structured project brief.<br />Compare the
+            instructions, then check what comes back.
+          </p>
+        </div>
+        <div class="steps" aria-label="Workflow">
+          <span><b>01</b> Add your notes</span
+          ><span><b>02</b> Try both prompts</span
+          ><span><b>03</b> Compare the answers</span>
+        </div>
+      </div>
+      <div id="status" role="status" class="status" hidden></div>
+      <section class="workspace" aria-label="Prompt workspace">
+        <section class="input-panel">
+          <div class="section-title">
+            <span class="step-number">01</span>
+            <h2>The raw material</h2>
+          </div>
+          <label for="sample">Practice case</label
+          ><select id="sample"></select
+          ><label for="notes" class="spaced">Rough notes</label
+          ><textarea
+            id="notes"
+            maxlength="8000"
+            rows="9"
+            spellcheck="false"
+          ></textarea>
+          <div class="input-meta">
+            <span id="char-count">0 characters</span><span>Max 8,000</span>
+          </div>
+          <div class="settings">
+            <div>
+              <label for="limit">Word limit</label
+              ><input id="limit" type="number" min="30" max="500" value="120" />
+            </div>
+            <div>
+              <label for="terms">Required terms <span>(optional)</span></label
+              ><input
+                id="terms"
+                type="text"
+                maxlength="500"
+                placeholder="React, Friday"
+              />
+            </div>
+          </div>
+          <p class="help">
+            Separate terms with commas. These checks match text, not meaning.
+          </p>
+          <button id="build" class="primary wide">
+            Build the two prompts <span aria-hidden="true">↗</span>
+          </button>
+          <div class="learning-note">
+            <span class="note-mark">i</span>
+            <p>
+              <strong>The experiment</strong>Keep the notes and model the same.
+              Change the instructions to see what actually helps.
+            </p>
+          </div>
+        </section>
+        <section class="prompt-panel">
+          <div class="section-title">
+            <span class="step-number">02</span>
+            <h2>The instructions</h2>
+            <span id="prompt-status" class="pill muted">Ready to copy</span>
+          </div>
+          <div class="prompt-tabs" role="tablist" aria-label="Prompt variants">
+            <button
+              id="tab-a"
+              role="tab"
+              aria-selected="true"
+              aria-controls="prompt-a"
+              class="active"
+            >
+              <span>A</span> Basic prompt</button
+            ><button
+              id="tab-b"
+              role="tab"
+              aria-selected="false"
+              aria-controls="prompt-b"
+              tabindex="-1"
+            >
+              <span>B</span> Structured + example
+            </button>
+          </div>
+          <div class="prompt-explainer" id="technique">
+            Direct task + format request. A useful starting point.
+          </div>
+          <div
+            id="prompt-a"
+            class="prompt-body"
+            role="tabpanel"
+            aria-labelledby="tab-a"
+          >
+            <pre id="text-a"></pre>
+          </div>
+          <div
+            id="prompt-b"
+            class="prompt-body"
+            role="tabpanel"
+            aria-labelledby="tab-b"
+            hidden
+          >
+            <pre id="text-b"></pre>
+          </div>
+          <div class="prompt-footer">
+            <span id="prompt-length"></span
+            ><button id="copy" class="secondary">Copy prompt A</button>
+          </div>
+          <div class="next-step">
+            <b>Your next step</b>
+            <p>
+              Paste each prompt into a fresh chat with the same AI model. Bring
+              both answers back below.
+            </p>
+          </div>
+        </section>
+      </section>
+      <section class="comparison-section" aria-labelledby="compare-title">
+        <div class="comparison-heading">
+          <div>
+            <div class="section-title">
+              <span class="step-number">03</span>
+              <h2 id="compare-title">What came back?</h2>
+            </div>
+            <p>
+              Paste the answers exactly as returned. Don’t fix formatting before
+              checking.
+            </p>
+          </div>
+          <label class="model-label" for="model"
+            >Model used
+            <input
+              id="model"
+              maxlength="150"
+              placeholder="e.g. model name and version"
+          /></label>
+        </div>
+        <div id="provenance" class="provenance" hidden></div>
+        <div class="answer-grid">
+          <article class="answer-card">
+            <div class="answer-heading">
+              <span class="variant">A</span>
+              <h3>Basic prompt</h3>
+              <span id="result-a" class="score-badge">Not checked</span>
+            </div>
+            <label class="sr-only" for="answer-a">Answer A</label
+            ><textarea
+              id="answer-a"
+              maxlength="30000"
+              rows="9"
+              placeholder="Paste the response to prompt A…"
+              spellcheck="false"
+            ></textarea>
+            <ul id="checks-a" class="checks"></ul>
+          </article>
+          <article class="answer-card">
+            <div class="answer-heading">
+              <span class="variant candidate">B</span>
+              <h3>Structured + example</h3>
+              <span id="result-b" class="score-badge">Not checked</span>
+            </div>
+            <label class="sr-only" for="answer-b">Answer B</label
+            ><textarea
+              id="answer-b"
+              maxlength="30000"
+              rows="9"
+              placeholder="Paste the response to prompt B…"
+              spellcheck="false"
+            ></textarea>
+            <ul id="checks-b" class="checks"></ul>
+          </article>
+        </div>
+        <div class="check-bar">
+          <p id="comparison-summary">
+            Both answers will be checked against the same rules.
+          </p>
+          <button id="evaluate" class="primary">Check both answers</button>
+        </div>
+        <p class="score-note">
+          Checks cover JSON, field types, length, and optional terms. They do
+          not prove that the facts are correct.
+        </p>
+      </section>
+      <section class="review-panel">
+        <div>
+          <h2>The part only you can judge.</h2>
+          <p>
+            Read both answers against the original notes. Did either invent a
+            fact, miss an exclusion, or hide an unresolved question?
+          </p>
+        </div>
+        <div class="review-fields">
+          <label for="winner"
+            >Your verdict<select id="winner">
+              <option value="not-reviewed">Not reviewed yet</option>
+              <option value="a">A is better</option>
+              <option value="b">B is better</option>
+              <option value="tie">About the same</option>
+              <option value="neither">Neither is good enough</option>
+            </select></label
+          ><label for="review"
+            >Evidence for your choice<textarea
+              id="review"
+              maxlength="3000"
+              rows="3"
+              placeholder="Quote a specific error, omission, or useful improvement…"
+            ></textarea></label
+          ><button id="export" class="secondary">
+            Download experiment JSON <span aria-hidden="true">↓</span>
+          </button>
+        </div>
+      </section>
+      <footer>
+        <span
+          ><strong>promptlab</strong> · A focused prompt engineering
+          project</span
+        ><span>No sign-in. No keys. Nothing sent by this app.</span
+        ><a href="README.md">Project guide ↗</a>
+      </footer>
+    </main>
+  </body>
+</html>
